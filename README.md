@@ -11,30 +11,56 @@ preview still needs a Windows pilot before use with important data.
 
 ## What it does
 
-- Track household purchases and income in local Excel-format workbooks.
-- Compare months and years with Spending Mix doughnuts, horizontal charts, and selected categories.
-- See review reminders and open the month that needs attention.
-- Use **Find That Thing** to search expenses, inspections, dealers, and notes across linked years.
-- Keep local backups, preview recovery, and optionally manage backup retention.
-- Add photos and notes to **Year in the Rearview**.
-- Enable business finance, inspections and mileage, loan tracking, family repayments,
-  Move & Housing Planner, and RōM exchange only when useful.
+* Track household purchases and income in local Excel-format workbooks.
+* Compare months and years with Spending Mix doughnuts, horizontal charts, and selected categories.
+* See review reminders and open the month that needs attention.
+* Use **Find That Thing** to search expenses, inspections, dealers, and notes across linked years.
+* Keep local backups, preview recovery, and optionally manage backup retention.
+* Add photos and notes to **Year in the Rearview**.
+* Enable business finance, inspections and mileage, loan tracking, family repayments,
+Move \& Housing Planner, and RōM exchange only when useful.
 
 No subscription, cloud account, bank login, telemetry, or hosted server is required.
 This is a personal project, not a hosted accounting service.
+
+
+
+## A look inside
+
+Screenshots from v3.32.53-alpha.4 using a fictional demonstration household. All amounts and entries shown are sample data.
+
+### See where your spending goes
+
+Compare months side by side with Spending Mix doughnuts. Highlight everyday spending categories, or choose the categories you want to compare.
+
+!\[Spending Mix compares September and October with matching category colors and a spending-change summary.](docs/screenshots/spending-mix.png)
+
+### Pick up where you left off
+
+Home / Overview brings recorded income, spending, and monthly review status together.
+
+!\[Home / Overview shows household totals and months awaiting financial reconciliation.](docs/screenshots/home-overview.png)
+
+### Keep the details close
+
+Expand a household category to review purchases, add notes, edit entries, or move purchases between categories.
+
+!\[October household expenses with Groceries expanded to show a recorded purchase and entry controls.](docs/screenshots/monthly-workspace.png)
+
+
 
 ## Download and start
 
 Open this repository's **Releases** section and choose:
 
-| Download | Use |
-|---|---|
-| `Ctrl-Ur-Finances-Starter-v3.32.53-alpha.4.zip` | Fresh installation |
-| `Ctrl-Ur-Finances-Starter-Update-v3.32.53-alpha.4.zip` | Existing supported Starter installation |
-| Repository ZIP / GitHub Source code | Development; runnable files are under `app/` |
+|Download|Use|
+|-|-|
+|`Ctrl-Ur-Finances-Starter-v3.32.53-alpha.4.zip`|Fresh installation|
+|`Ctrl-Ur-Finances-Starter-Update-v3.32.53-alpha.4.zip`|Existing supported Starter installation|
+|Repository ZIP / GitHub Source code|Development; runnable files are under `app/`|
 
 1. Install **Python 3.10 or newer** on Windows. The launcher needs a working `py`
-   or `python` command. No pip packages or Node.js are needed for normal use.
+or `python` command. No pip packages or Node.js are needed for normal use.
 2. Extract the complete Starter ZIP into a permanent writable folder.
 3. Run **Start-App.bat**. It opens a local browser page.
 4. Enter a household name, starting year, and an empty data folder. Start in **Personal / Household**.
@@ -51,8 +77,8 @@ Try the fictional entries in [TRY-IT](examples/TRY-IT.md) in a disposable instal
 of [RōM](https://github.com/doublediamondlabs/RoM). RōM can receive a scheduled
 inspection and return selected actual travel information through previewed JSON files.
 
-RōM is not bundled or required. Business Finance, Inspections & Travel, and
-**RōM Travel Exchange** must be enabled in **Modules & appearance** to use the connection.
+RōM is not bundled or required. Business Finance, Inspections \& Travel, and
+**RōM Travel Exchange** must be enabled in **Modules \& appearance** to use the connection.
 They start off. Transfers are manual; there is no automatic synchronization.
 
 ## Your files and backups
@@ -81,16 +107,16 @@ See [release notes](docs/RELEASE-NOTES.md) for supported Starter versions.
 
 ## Limitations
 
-- Experimental preview; no warranty, support SLA, or guarantee of fitness for your records.
-- Windows desktop is the supported launch workflow. Windows, shared-drive, shortcut,
-  and printed-page behavior need user testing; automated checks here ran on Linux.
-- Bank import handles the existing supported statement format. Generic bank PDFs,
-  OCR, and live bank connections are not provided.
-- Tax Preparation organizes records; it does not determine deductions, file taxes,
-  or automatically track tax-law changes.
-- Move Planner compares entered monthly cash assumptions; it does not calculate a purchase price.
-- Data is stored as local files, not encrypted by the app. Computer/share permissions matter.
-- A focused review and passing tests do not replace an independent security audit.
+* Experimental preview; no warranty, support SLA, or guarantee of fitness for your records.
+* Windows desktop is the supported launch workflow. Windows, shared-drive, shortcut,
+and printed-page behavior need user testing; automated checks here ran on Linux.
+* Bank import handles the existing supported statement format. Generic bank PDFs,
+OCR, and live bank connections are not provided.
+* Tax Preparation organizes records; it does not determine deductions, file taxes,
+or automatically track tax-law changes.
+* Move Planner compares entered monthly cash assumptions; it does not calculate a purchase price.
+* Data is stored as local files, not encrypted by the app. Computer/share permissions matter.
+* A focused review and passing tests do not replace an independent security audit.
 
 ## Development and support
 
@@ -111,3 +137,4 @@ folder or recovery ZIP. That selection grants access for the current app session
 Pasting an external path alone does not grant access. Existing linked workbooks
 continue working after restart. Files within the data folder remain directly
 accessible. Windows file selection supports local drives and network shares.
+
