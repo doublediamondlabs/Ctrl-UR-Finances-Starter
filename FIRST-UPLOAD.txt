@@ -1,0 +1,4 @@
+PUBLIC PREVIEW v3.32.53-alpha.2
+Use docs/PUBLISHING.md. Keep the existing private repository intact.
+Copy this folder's CONTENTS into a new empty clone, preserving .git.
+Do not upload used installations, data, workbooks, backups or node_modules.

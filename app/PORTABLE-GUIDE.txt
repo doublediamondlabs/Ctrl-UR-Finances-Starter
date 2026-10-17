@@ -1,0 +1,14 @@
+Create-Portable-Copy.bat makes a separate complete copy while the app is closed.
+It includes user settings, custom logo, shared inspection history, all linked
+annual/repayment workbooks and their existing histories. Optional references can
+be included. External data is brought into the new copy's User-Data folder and
+workbook links become relative. The original remains unchanged.
+
+Close the browser, Start-App command window and Excel first. Choose a destination
+outside BOTH the existing application and data folders. Keep the resulting folder
+together. Start-App.bat inside the new folder launches that copy. Once satisfied,
+use only that copy; entries do not synchronize back to the original.
+
+Python 3.10+ must be installed on the receiving Windows computer. The app and user
+data remain local. A copy containing real records is a private backup, not a clean
+starter to give someone else. Share the original empty starter ZIP for new users.

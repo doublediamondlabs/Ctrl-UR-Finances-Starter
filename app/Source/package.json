@@ -1,0 +1,22 @@
+{
+  "name": "ctrl-ur-finances",
+  "private": true,
+  "version": "3.32.53-alpha.2",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild main.jsx --bundle --minify --format=iife --target=es2020 --outfile=../web/app.js"
+  },
+  "dependencies": {
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "fflate": "0.8.3",
+    "lucide-react": "1.31.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.0"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
+  }
+}

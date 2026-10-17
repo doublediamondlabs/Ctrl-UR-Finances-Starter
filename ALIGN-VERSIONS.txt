@@ -1,0 +1,3 @@
+Starter, Starter Update and Repository packages identify as 3.32.53-alpha.2.
+Use Starter for a fresh installation and Starter Update for an existing Starter.
+This is not a live Double Diamond Expense Book update.

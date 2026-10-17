@@ -1,0 +1,56 @@
+# Repository release: v3.32.53-alpha.2
+# Financial files and generated distribution packages
+*.xlsx
+*.xls
+*.csv
+*.pdf
+*.zip
+*.bak
+# Runtime stores and backups anywhere in the tree
+**/linked-workbooks.json
+**/inspection-history.json
+**/inspection-transaction.json
+**/loan-trackers.json
+**/processor-deposits.json
+**/backup-status.json
+**/PORTABLE-MANIFEST.json
+**/Workbooks/
+**/Portable-Data/
+**/Linked-Data/
+**/References/
+**/User-Data/
+**/Expense-Book-Backups/
+**/Inspection-History-Backups/
+**/App-Update-Backups/
+**/Recovery-Backups/
+**/Restore-Reviews/
+**/app-instance.lock
+**/running-address.txt
+**/.expense-book-*
+**/.dd-backup-*
+.env
+.env.*
+*.pem
+*.key
+# Developer dependencies and caches
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+dist/
+.DS_Store
+Thumbs.db
+
+**/data-location.json
+**/appearance-logo.png
+**/Loan-Tracker-Backups/
+
+**/rearview-*.json
+qa-*.js
+
+# Session identity, local logs and backup bookkeeping
+**/running-session.json
+**/backup-cleanup-history.json
+**/backup-retention.json
+**/startup-error.txt
+**/*.log

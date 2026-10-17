@@ -1,0 +1,40 @@
+import assert from 'node:assert/strict';
+import { JSDOM } from 'jsdom';
+import { bundleHarness } from './helpers.mjs';
+const w = new JSDOM('<div id="root"></div>', {
+  runScripts: 'outside-only',
+  url: 'http://localhost'
+}).window;
+w.eval(bundleHarness('qa-sidebar-group.jsx'));
+const wait = () => new Promise(r => setTimeout(r, 40));
+await wait();
+const toggle = () => w.document.querySelector('.sidebar-group-toggle');
+const body = () => w.document.getElementById('dd-sidebar-group-month');
+assert.equal(toggle().getAttribute('aria-expanded'), 'false');
+assert.equal(body().hidden, true);
+toggle().click();
+await wait();
+assert.equal(body().hidden, false);
+assert.equal(w.selected, undefined);
+const nested = w.document.querySelector('[aria-controls="dd-period-business-activity"]');
+nested.click();
+await wait();
+toggle().click();
+await wait();
+assert.equal(body().hidden, true);
+assert.equal(w.selected, undefined);
+assert.equal(nested.getAttribute('aria-expanded'), 'true');
+toggle().click();
+await wait();
+w.document.querySelector('.sidebar-group-open').click();
+assert.equal(w.selected, 'month');
+w.document.querySelector('.nav-arrange').click();
+await wait();
+assert.equal(toggle(), null);
+[...w.document.querySelectorAll('button')].find(b => b.textContent === 'Cancel').click();
+await wait();
+assert.equal(toggle().getAttribute('aria-expanded'), 'true');
+assert.equal(w.document.querySelector('[aria-controls="dd-period-business-activity"]').getAttribute('aria-expanded'), 'true');
+assert.match(w.document.cookie, /dd-sidebar-group-month=open/);
+w.close();
+console.log('PASS workspace collapse hides both nested sections without navigation; explicit open, remembered outer/inner state and arrange/cancel restoration.');

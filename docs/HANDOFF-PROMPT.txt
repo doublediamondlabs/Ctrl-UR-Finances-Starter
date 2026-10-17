@@ -1,0 +1,12 @@
+Help maintain Ctrl Ur Finances Starter. Source baseline: 3.32.40-alpha.1. Read README.md, LAST-VERIFIED.json, docs/MAINTENANCE.md, docs/RELEASE-NOTES.md and tools before editing.
+
+This is a local/offline Python + React application with linked Excel workbooks and JSON settings. Preserve offline runtime, shared-folder use, existing data, review state, loans, destination history, optional modules, saved scenarios, editions and yearbook photos/notes. Never test against real linked files. Keep the live Expense Book and clean Ctrl Ur Finances starter separate. No cloud dependency or subscription should be added.
+
+First inspect the source and reproduce the documented build/checks. Use an isolated development copy and synthetic fixtures. Make the smallest complete change for my request; retain current functionality. Add focused checks for substantive behavior, run tools/release.py, and inspect the actual ZIPs. Do not bypass updater guards or invent prior test results. Do not put personal settings/workbooks/photos into shareable packages.
+
+Deliver the finished correct-product update, matching source/repository package, clear version, short change notes and simple Windows installation instructions. Explain what was tested and what needs my native Windows pilot. Do not publish, send to others or modify my installed app unless I explicitly request it. Update the maintenance documentation when implementation changes affect the process.
+
+Requested improvement: [describe it here]
+Expected behavior: [give an example]
+Observed behavior or error: [paste exact text]
+Current installed version: [read it from the app]

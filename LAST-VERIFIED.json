@@ -1,0 +1,11 @@
+{
+  "project": "Ctrl Ur Finances Starter",
+  "version": "3.32.53-alpha.2",
+  "verified_date": "2026-10-17",
+  "previous_baseline": "3.32.53-alpha.1",
+  "verification": "Full tools/verify.py passed with 49 test scripts, syntax/version checks and reproducible frontend. Synthetic fresh setup, optional modules, spending comparison, backup/restore, public rendering guards and updater regression checks passed.",
+  "frontend_sha256": "08fa4444abcfa48dc1fe299ac0494773fb8819858f748785df5c568c460ba08a",
+  "native_windows_pilot": "Pending owner pilot; not performed in this environment.",
+  "github_codeql": "Pending scan of the new public repository.",
+  "review_scope": "See docs/PUBLIC-RELEASE-REVIEW.md. Private repository history was not supplied."
+}

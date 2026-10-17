@@ -1,0 +1,48 @@
+import { bundleHarness } from './helpers.mjs';
+const testBundle = bundleHarness('qa-editions.jsx');
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import { JSDOM } from 'jsdom';
+const w = new JSDOM('<div id="root"></div>', {
+  runScripts: 'dangerously',
+  url: 'http://localhost'
+}).window;
+w.structuredClone = structuredClone;
+w.confirm = () => true;
+w.eval(testBundle);
+const wait = () => new Promise(r => setTimeout(r, 40));
+await wait();
+const d = w.document;
+const button = t => [...d.querySelectorAll('button')].find(x => x.textContent === t);
+assert.match(d.querySelector('#sidebar').textContent, /Your Next Chapter/);
+button('Duplicate').click();
+await wait();
+assert.equal(d.querySelector('select').options.length, 2);
+assert.equal(w.dirty, true);
+assert.match(d.querySelector('#sidebar').textContent, /Your Next Chapter/);
+w.fail = true;
+button('Save Editions').click();
+await wait();
+assert.match(d.querySelector('[role=alert]').textContent, /Save failed/);
+assert.equal(w.dirty, true);
+w.fail = false;
+button('Save Editions').click();
+await wait();
+assert.equal(w.saved.items.length, 2);
+assert.match(d.querySelector('#sidebar').textContent, /Your Next Chapter copy/);
+assert.equal(w.dirty, false);
+d.querySelector('input[type=checkbox]').click();
+await wait();
+assert.ok(d.querySelector('#sidebar .loop-edition'));
+button('Save Editions').click();
+await wait();
+assert.equal(d.querySelector('#sidebar').textContent, '');
+assert.ok(d.querySelector('.edition-preview .loop-edition'));
+button('New Edition').click();
+await wait();
+button('Discard Changes').click();
+await wait();
+assert.equal(d.querySelector('select').options.length, 2);
+assert.equal(w.dirty, false);
+w.close();
+console.log('PASS initial tribute, duplicate/select, failed save preserves draft, save applies, hidden tribute with preview, discard restores.');
