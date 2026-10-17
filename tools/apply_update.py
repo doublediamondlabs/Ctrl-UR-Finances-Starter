@@ -8,7 +8,7 @@ def install(target,payload=None):
  target=Path(target).resolve();payload=Path(payload or ROOT/'payload');names=json.loads((payload/'PROGRAM-FILES.json').read_text())
  if not (target/'Start-App.bat').is_file() or not (target/'expense_book.py').is_file():raise ValueError('Select the EXPERIMENTAL starter folder containing Start-App.bat.')
  code=(target/'expense_book.py').read_text()
- if not any('Expense Book '+v in code for v in ['3.32.53-alpha.3','3.32.53-alpha.2','3.32.53-alpha.1','3.7.0-alpha.1','3.7.0-alpha.2','3.7.0-alpha.3','3.7.0-alpha.4','3.7.0-alpha.5','3.7.0-alpha.6','3.32.3-alpha.1','3.32.7-alpha.1','3.32.16-alpha.1','3.32.36-alpha.1','3.32.37-alpha.1','3.32.40-alpha.1']):raise ValueError('This updater is only for the experimental starter. Do not select the live Double Diamond Expense Book folder.')
+ if not any('Expense Book '+v in code for v in ['3.32.53-alpha.4','3.32.53-alpha.3','3.32.53-alpha.2','3.32.53-alpha.1','3.7.0-alpha.1','3.7.0-alpha.2','3.7.0-alpha.3','3.7.0-alpha.4','3.7.0-alpha.5','3.7.0-alpha.6','3.32.3-alpha.1','3.32.7-alpha.1','3.32.16-alpha.1','3.32.36-alpha.1','3.32.37-alpha.1','3.32.40-alpha.1']):raise ValueError('This updater is only for the experimental starter. Do not select the live Double Diamond Expense Book folder.')
  if any(Path(n).is_absolute() or '..' in Path(n).parts or n.startswith(('User-Data/','Workbooks/')) or n.endswith('.json') for n in names):raise ValueError('Invalid program manifest.')
  if any(not (payload/n).is_file() for n in names):raise ValueError('Extract the complete update ZIP first.')
  checksum=payload.parent/'PAYLOAD-SHA256.json'

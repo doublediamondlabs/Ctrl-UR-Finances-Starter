@@ -1,11 +1,11 @@
 {
   "project": "Ctrl Ur Finances Starter",
-  "version": "3.32.53-alpha.3",
+  "version": "3.32.53-alpha.4",
   "verified_date": "2026-10-17",
-  "previous_baseline": "3.32.53-alpha.2",
-  "verification": "Full tools/verify.py passed with 50 test scripts, syntax/version and reproducible frontend checks. Final last-backup compatibility adjustment was then checked with file-boundary, storage and retention/restore tests. Packaged updater/data-preservation checks run separately.",
-  "frontend_sha256": "d3c082aec41258484ba901c6315db96f2aac31aaa3e9ebad403a9cc7b946253e",
+  "previous_baseline": "3.32.53-alpha.3",
+  "verification": "Full tools/verify.py passed: 50 test scripts, version/syntax checks and reproducible frontend. Targeted canonical-path, exact chooser grants, traversal/sibling/symlink, setup/storage, backup/restore/retention and host/origin/token tests also passed. Packaged updater/data-preservation checks run separately.",
+  "frontend_sha256": "db449cb776c6d348f91d2ce44f4f3c2d97999f0ab6ce26431cdb0aaf7835c6f0",
   "native_windows_pilot": "Pending owner pilot; not performed in this environment.",
-  "github_codeql": "Alpha.2 scan reported 13 path-injection alerts. Alpha.3 follow-up scan pending.",
+  "github_codeql": "Alpha.3: 12 closed and 14 open alerts reported by owner. Alpha.4 follow-up scan pending.",
   "review_scope": "See docs/PUBLIC-RELEASE-REVIEW.md. Private repository history was not supplied."
 }

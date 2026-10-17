@@ -1,6 +1,6 @@
 # Public-release preparation — 2026-10-17
 
-Candidate: **Ctrl Ur Finances v3.32.53-alpha.3**
+Candidate: **Ctrl Ur Finances v3.32.53-alpha.4**
 Source: supplied v3.32.53-alpha.1 Repository ZIP, extracted into a separate working copy.
 The private live Expense Book, SEO Genie and original Starter source were not modified.
 
@@ -84,3 +84,14 @@ The backup destination/reference selection and existing configured data/workbook
 locations remain trusted local-app settings; the app is not an Internet-hosted
 service or a sandbox against a malicious user of the same operating-system account.
 Native chooser behavior and UNC paths need the owner Windows pilot.
+
+## Alpha.4 follow-up
+
+The owner-provided alpha.3 results show 12 closed and 14 open path-injection
+alerts. The common helper compared a case-normalized alias and returned the
+pre-comparison canonical value; the root-equality branch also returned that
+request-derived value. Alpha.4 returns the trusted base in the equality case
+and directly validates the canonical descendant value that it returns. This
+keeps the checks explicit for both maintenance and static analysis. The public
+CodeQL standard-library model was consulted to confirm its path-normalization
+and startswith guard behavior. A new GitHub scan is still required.

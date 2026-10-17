@@ -9,14 +9,14 @@ has no .git directory and establishes nothing about the remote's previous commit
    Do not initialize another README or license. Clone it with GitHub Desktop.
 3. Extract the Repository ZIP. Copy the contents inside `ctrl-ur-finances` into the
    new clone, preserving `.git`. Do not copy from your used installation.
-4. Review Changes, commit `Public preview v3.32.53-alpha.3`, and push.
+4. Review Changes, commit `Public preview v3.32.53-alpha.4`, and push.
 5. Pilot the fresh Starter on Windows using examples/TRY-IT.md: version, setup,
    save/reopen, spending comparisons, shortcut, Exit, and backup/restore.
 6. Inspect the new files and initial history. Then change visibility to public.
    Enable private vulnerability reporting, dependency alerts, and CodeQL Default
    setup for Python and JavaScript/TypeScript. Check both jobs and scan findings
    before publishing the release.
-7. Draft tag `v3.32.53-alpha.3` on the reviewed commit, paste RELEASE-NOTES.md, mark
+7. Draft tag `v3.32.53-alpha.4` on the reviewed commit, paste RELEASE-NOTES.md, mark
    **pre-release**, and attach the fresh Starter ZIP and Starter Update ZIP.
    SHA256SUMS.txt is optional. The Repository ZIP is for source maintenance.
 

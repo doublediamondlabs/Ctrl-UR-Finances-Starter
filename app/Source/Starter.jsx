@@ -60,7 +60,7 @@ function Setup({
           } catch (e) {
             setError(e.message);
           }
-        }}>Choose empty folder</button><p className="hint">Setup entries are saved when you choose Create household. Your new workbook, settings and backups go here. The default User-Data folder keeps them separate from program files. Choose an empty folder; existing files will not be replaced.</p>{error && <p className="error" role="alert">{error}</p>}<button className="primary" disabled={busy}>{busy ? 'Creating workspace…' : 'Create household'}</button></fieldset></form><p className="starter-footer">Developed by Double Diamond Labs — Adventure On!<br />v3.32.53-alpha.3 · Separate test installation only</p></main>;
+        }}>Choose empty folder</button><p className="hint">Setup entries are saved when you choose Create household. Your new workbook, settings and backups go here. The default User-Data folder keeps them separate from program files. Choose an empty folder; existing files will not be replaced.</p>{error && <p className="error" role="alert">{error}</p>}<button className="primary" disabled={busy}>{busy ? 'Creating workspace…' : 'Create household'}</button></fieldset></form><p className="starter-footer">Developed by Double Diamond Labs — Adventure On!<br />v3.32.53-alpha.4 · Separate test installation only</p></main>;
 }
 export async function prepareLogo(file) {
   if (!['image/png', 'image/jpeg'].includes(file.type) || file.size > 5 * 1024 * 1024) throw Error('Choose a PNG or JPEG image smaller than 5 MB.');

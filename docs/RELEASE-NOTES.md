@@ -1,3 +1,22 @@
+# Ctrl Ur Finances v3.32.53-alpha.4 — canonical path checks
+
+The alpha.3 scan closed 12 prior alerts and reported 14 open path-injection
+alerts at downstream file operations. This small follow-up separates the exact
+trusted-root case from descendant access and checks the same normalized path
+value that is returned for use. The existing separator-aware containment check,
+symlink resolution, exact chooser grants and saved-link behavior remain in place.
+No scan exclusions, dismissals or rule suppressions were added.
+
+The file-selection workflow is unchanged from alpha.3. Existing workbook links
+and Use Last Successful Backup still work. New external workbook/recovery paths
+use the existing native chooser. No financial or workbook-format changes.
+
+Targeted file-boundary, setup/storage, backup/restore/retention and request-guard
+tests passed. See LAST-VERIFIED.json for final release verification. GitHub CodeQL
+must rescan this commit; alert resolution is not claimed in advance.
+
+---
+
 # Ctrl Ur Finances v3.32.53-alpha.3 — file-access review
 
 This candidate addresses the file-access locations flagged by the first public

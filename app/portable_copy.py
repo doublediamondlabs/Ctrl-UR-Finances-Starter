@@ -90,7 +90,7 @@ def create_copy(destination_parent,references=None):
             for _,_,source,sha in sources:
                 if digest(source)!=sha:raise ValueError('A linked workbook changed during copying; retry with Excel closed.')
             if (app.CONFIG.read_bytes() if app.CONFIG.exists() else None)!=original_config:raise ValueError('App settings changed during copying; please retry.')
-            manifest={'created':datetime.datetime.now().isoformat(timespec='seconds'),'version':'3.32.53-alpha.3','files':{}}
+            manifest={'created':datetime.datetime.now().isoformat(timespec='seconds'),'version':'3.32.53-alpha.4','files':{}}
             for p in sorted(target.rglob('*')):
                 if p.is_file() and p.name!='PORTABLE-MANIFEST.json':manifest['files'][p.relative_to(target).as_posix()]=digest(p)
             (target/'PORTABLE-MANIFEST.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')

@@ -24,7 +24,11 @@ def request_path(value, purpose, root, known=(), descendants=True):
     base = os.path.realpath(str(root))
     folded = os.path.normcase(candidate)
     base_folded = os.path.normcase(base)
-    if folded == base_folded or (descendants and folded.startswith(base_folded.rstrip(os.sep) + os.sep)):
+    if folded == base_folded:
+        return Path(base)
+    # Check the same canonical value we return. Keep the separator boundary and
+    # resolve links before testing, so sibling prefixes and traversal cannot pass.
+    if descendants and candidate.startswith(base.rstrip(os.sep) + os.sep):
         return Path(candidate)
     # Return the trusted stored object, not a path reconstructed from the request.
     for approved in (*known, *_GRANTS.get(purpose, ())):

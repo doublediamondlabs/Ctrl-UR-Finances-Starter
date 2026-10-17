@@ -1,4 +1,4 @@
-"""Double Diamond Expense Book 3.32.53-alpha.3 -- local files only, Python standard library."""
+"""Double Diamond Expense Book 3.32.53-alpha.4 -- local files only, Python standard library."""
 import backup_retention, file_access
 import rearview, preferences, move_planner, recovery, deadlines, debts, inspection_store
 import socket, urllib.request
@@ -436,7 +436,7 @@ def main():
         server=HTTPServer(('127.0.0.1',args.port),Handler);address=f'http://127.0.0.1:{server.server_port}/'
         (ROOT/'running-address.txt').write_text(address)
         (ROOT/'running-session.json').write_text(json.dumps({'address':address,'computer':socket.gethostname(),'instance':INSTANCE}))
-        print('Ctrl Ur Finances v3.32.53-alpha.3\n'+address+'\nUse Exit Ctrl Ur Finances in the sidebar before updating. Closing a browser tab does not stop the app.',flush=True)
+        print('Ctrl Ur Finances v3.32.53-alpha.4\n'+address+'\nUse Exit Ctrl Ur Finances in the sidebar before updating. Closing a browser tab does not stop the app.',flush=True)
         if not args.no_browser: threading.Timer(.5,lambda:webbrowser.open(address)).start()
         try: server.serve_forever()
         except KeyboardInterrupt: print('Ctrl Ur Finances stopped.')

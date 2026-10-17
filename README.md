@@ -2,7 +2,7 @@
 
 **Offline household finances, with optional small-business tools.**
 
-Public preview **v3.32.53-alpha.3** · Windows launchers · MIT license
+Public preview **v3.32.53-alpha.4** · Windows launchers · MIT license
 
 Built through an iterative, AI-assisted development process and tested in our daily workflow.
 This shareable Starter edition is derived from Expense Book. It begins with a
@@ -29,8 +29,8 @@ Open this repository's **Releases** section and choose:
 
 | Download | Use |
 |---|---|
-| `Ctrl-Ur-Finances-Starter-v3.32.53-alpha.3.zip` | Fresh installation |
-| `Ctrl-Ur-Finances-Starter-Update-v3.32.53-alpha.3.zip` | Existing supported Starter installation |
+| `Ctrl-Ur-Finances-Starter-v3.32.53-alpha.4.zip` | Fresh installation |
+| `Ctrl-Ur-Finances-Starter-Update-v3.32.53-alpha.4.zip` | Existing supported Starter installation |
 | Repository ZIP / GitHub Source code | Development; runnable files are under `app/` |
 
 1. Install **Python 3.10 or newer** on Windows. The launcher needs a working `py`

@@ -1,4 +1,4 @@
-CTRL UR FINANCES — v3.32.53-alpha.3
+CTRL UR FINANCES — v3.32.53-alpha.4
 EXPERIMENTAL OFFLINE HOUSEHOLD STARTER
 
 NEW INSTALLATION
@@ -12,7 +12,7 @@ EXISTING SUPPORTED STARTER INSTALLATION
 Use the separate Starter-Update ZIP. Back up first, use Exit Ctrl Ur Finances (or close the old command window),
 close linked Excel workbooks, then run Apply-Update.bat and choose
 the EXISTING Starter folder containing Start-App.bat. Reopen and confirm
-3.32.53-alpha.3. Your entries, links, settings, logo and optional modules stay put.
+3.32.53-alpha.4. Your entries, links, settings, logo and optional modules stay put.
 Do not use a live Double Diamond Expense Book update on this Starter.
 
 RECENT ADDITIONS

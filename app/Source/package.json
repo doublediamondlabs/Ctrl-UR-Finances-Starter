@@ -1,7 +1,7 @@
 {
   "name": "ctrl-ur-finances",
   "private": true,
-  "version": "3.32.53-alpha.3",
+  "version": "3.32.53-alpha.4",
   "type": "module",
   "scripts": {
     "build": "esbuild main.jsx --bundle --minify --format=iife --target=es2020 --outfile=../web/app.js"

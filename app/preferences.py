@@ -10,7 +10,7 @@ def get(app):
  c=app.load_config();p=defaults(bool(c.get('years')));p.update(c.get('preferences',{}));p['modules']={**defaults(bool(c.get('years')))['modules'],**p.get('modules',{})};return p
 def packet(app):
  c=app.load_config();p=get(app)
- return {'preferences':p,'revision':app.digest(json.dumps(p,sort_keys=True).encode()),'initialized':bool(c.get('years')) or c.get('setupComplete',False),'dataDirectory':str(app.DATA),'version':'3.32.53-alpha.3'}
+ return {'preferences':p,'revision':app.digest(json.dumps(p,sort_keys=True).encode()),'initialized':bool(c.get('years')) or c.get('setupComplete',False),'dataDirectory':str(app.DATA),'version':'3.32.53-alpha.4'}
 def validate(app,p):
  if not isinstance(p,dict) or set(p)!=set(defaults()):raise app.UserError('Invalid application preferences.')
  for key,size in [('householdName',100),('title',60),('tagline',100)]:
