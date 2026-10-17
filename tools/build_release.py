@@ -4,7 +4,7 @@ import hashlib,json,zipfile
 ROOT=Path(__file__).resolve().parents[1]
 VERSION=json.loads((ROOT/'app/Source/package.json').read_text())['version']
 OUT=ROOT/'dist'
-RUNTIME_NAMES={'Ctrl-Ur-Finances.ico','quiet_start.py','Install-Desktop-Shortcut.bat','Start-App-Diagnostics.bat','backup_retention.py','rearview.py','move_planner.py','expense_book.py','preferences.py','recovery.py','portable_copy.py','deadlines.py','debts.py','inspection_store.py','Start-App.bat','Create-Portable-Copy.bat','README-STARTER.txt','PORTABLE-GUIDE.txt','THIRD-PARTY-NOTICES.txt'}
+RUNTIME_NAMES={'file_access.py','Ctrl-Ur-Finances.ico','quiet_start.py','Install-Desktop-Shortcut.bat','Start-App-Diagnostics.bat','backup_retention.py','rearview.py','move_planner.py','expense_book.py','preferences.py','recovery.py','portable_copy.py','deadlines.py','debts.py','inspection_store.py','Start-App.bat','Create-Portable-Copy.bat','README-STARTER.txt','PORTABLE-GUIDE.txt','THIRD-PARTY-NOTICES.txt'}
 PUBLIC_FILES=['README.md','LICENSE','SUPPORT.md','SECURITY.md','CONTRIBUTING.md','docs/RELEASE-NOTES.md','docs/MAINTENANCE.md','docs/DEPENDENCIES.md','docs/DEVELOPMENT-LICENSES.txt','docs/PUBLIC-RELEASE-REVIEW.md','docs/PUBLISHING.md','examples/TRY-IT.md']
 WEB_NAMES={'shortcut-icon.svg','app.js','style.css','index.html','favicon.svg'}
 def runtime():

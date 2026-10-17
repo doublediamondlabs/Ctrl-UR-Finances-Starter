@@ -1,5 +1,5 @@
-"""Double Diamond Expense Book 3.32.53-alpha.2 -- local files only, Python standard library."""
-import backup_retention
+"""Double Diamond Expense Book 3.32.53-alpha.3 -- local files only, Python standard library."""
+import backup_retention, file_access
 import rearview, preferences, move_planner, recovery, deadlines, debts, inspection_store
 import socket, urllib.request
 import argparse, base64, datetime as dt, hashlib, io, json, os, secrets, shutil, sys, tempfile, threading, webbrowser, zipfile
@@ -136,13 +136,13 @@ def check_setup_source(year,body):
     sy=int(body['sourceYear'])
     if sy>=int(year): raise UserError('Destination year must follow the source year.')
     source,_=workbook_path(sy)
-    if not body.get('sourcePath') or os.path.normcase(str(source.resolve()))!=os.path.normcase(str(Path(body['sourcePath']).resolve())): raise UserError('Source workbook link changed. Preview year setup again.',409)
+    if not body.get('sourcePath') or not file_access.matches(body['sourcePath'],source,ROOT): raise UserError('Source workbook link changed. Preview year setup again.',409)
     if body.get('sourceRevision')!=digest(source.read_bytes()): raise UserError('Source workbook changed. Preview year setup again.',409)
 
 def save_year(year,body):
     check_setup_source(year,body)
     p,_=workbook_path(year)
-    if body.get('workbookPath') and os.path.normcase(str(p.resolve()))!=os.path.normcase(str(Path(body['workbookPath']).resolve())): raise UserError('Destination workbook link changed. Preview again.',409)
+    if body.get('workbookPath') and not file_access.matches(body['workbookPath'],p,ROOT): raise UserError('Destination workbook link changed. Preview again.',409)
     current=p.read_bytes()
     if body.get('revision')!=digest(current): raise UserError('The workbook changed outside this window. Your edits were not saved. Copy any text you need, click Reload workbook, and apply your change to the newer version.',409)
     try: data=base64.b64decode(body.get('base64',''),validate=True)
@@ -163,7 +163,7 @@ def save_loan(body):
     item=load_config().get('loan')
     if not item: raise UserError('Link the loan workbook first.')
     p=resolve_path(item['path'])
-    if body.get('loanPath') and os.path.normcase(str(resolve_path(body['loanPath']).resolve()))!=os.path.normcase(str(p.resolve())): raise UserError('The loan link changed in another window. Reload the loan before saving.',409)
+    if body.get('loanPath') and not file_access.matches(body['loanPath'],p,ROOT): raise UserError('The loan link changed in another window. Reload the loan before saving.',409)
     current=p.read_bytes()
     if body.get('revision')!=digest(current): raise UserError('The loan workbook changed outside this window. Reload the loan before saving.',409)
     try: data=base64.b64decode(body.get('base64',''),validate=True)
@@ -176,7 +176,7 @@ def picker():
         import tkinter as tk
         from tkinter import filedialog
         root=tk.Tk();root.withdraw();root.attributes('-topmost',True)
-        try: return filedialog.askopenfilename(title='Link an Excel workbook',filetypes=[('Excel workbook','*.xlsx')])
+        try: return file_access.remember('workbook',filedialog.askopenfilename(title='Link an Excel workbook',filetypes=[('Excel workbook','*.xlsx')]))
         finally: root.destroy()
     except Exception:
         raise UserError('The file picker is unavailable. Paste the full workbook path in the Link workbook form instead.')
@@ -263,8 +263,9 @@ class Handler(BaseHTTPRequestHandler):
                     win=tk.Tk();win.withdraw();win.attributes('-topmost',True)
                     try:chosen=filedialog.askdirectory(title='Choose an empty data folder')
                     finally:win.destroy()
+                    file_access.remember('setup',chosen)
                     return self.respond({'path':chosen})
-                except Exception:raise UserError('Folder picker unavailable. Enter the folder path in setup instead.')
+                except Exception:raise UserError('Folder picker unavailable. Use the default User-Data folder, or reopen the app and try the chooser again.')
             if route in ('/api/link','/api/unlink','/api/create','/api/loan/link','/api/loan/create'):
                 validate_link_change(load_config(),route,body)
             if route=='/api/loan/create':
@@ -279,7 +280,7 @@ class Handler(BaseHTTPRequestHandler):
             if route=='/api/inspection/save': return self.respond(inspection_store.save(sys.modules[__name__],body))
             if route=='/api/backup/choose': return self.respond(recovery.choose(sys.modules[__name__],body))
             if route=='/api/backup/create': return self.respond(recovery.start(sys.modules[__name__],body))
-            if route=='/api/backup/preview': return self.respond(recovery.preview(body))
+            if route=='/api/backup/preview': return self.respond(recovery.preview(body,sys.modules[__name__]))
             if route=='/api/backup/restore': return self.respond(recovery.restore(sys.modules[__name__],body))
             if route=='/api/rearview': return self.respond(rearview.save(sys.modules[__name__],body))
             if route=='/api/debts': return self.respond(debts.save(sys.modules[__name__],body))
@@ -357,13 +358,13 @@ class Handler(BaseHTTPRequestHandler):
                 return self.respond({order_key:order,'toolsOrder':config.get('toolsOrder',[])})
             if route=='/api/pick': return self.respond({'path':picker()})
             if route=='/api/preview':
-                p=Path(str(body.get('path','')).strip().strip('"')).expanduser().resolve()
+                p=file_access.workbook(sys.modules[__name__],body.get('path',''))
                 if p.suffix.lower()!='.xlsx' or not p.is_file(): raise UserError('Choose an existing .xlsx file.')
                 data=p.read_bytes();validate_xlsx(data)
                 return self.respond({'path':str(p),'base64':base64.b64encode(data).decode(),'name':p.name,'revision':digest(data)})
             if route=='/api/loan/save': return self.respond(save_loan(body))
             if route=='/api/loan/link':
-                p=Path(str(body.get('path','')).strip().strip('"')).expanduser().resolve()
+                p=file_access.workbook(sys.modules[__name__],body.get('path',''))
                 if p.suffix.lower()!='.xlsx' or not p.is_file(): raise UserError('Choose an existing loan .xlsx workbook.')
                 data=p.read_bytes();validate_xlsx(data)
                 if body.get('previewRevision') and body['previewRevision']!=digest(data): raise UserError('The selected workbook changed after preview. Preview it again.',409)
@@ -375,7 +376,7 @@ class Handler(BaseHTTPRequestHandler):
             if route=='/api/save': return self.respond(save_year(year,body))
             config=load_config()
             if route=='/api/link':
-                p=Path(str(body.get('path','')).strip().strip('"')).expanduser().resolve()
+                p=file_access.workbook(sys.modules[__name__],body.get('path',''))
                 if p.suffix.lower()!='.xlsx' or not p.is_file(): raise UserError('Choose an existing .xlsx file.')
                 validate_xlsx(p.read_bytes())
                 if config.get('loan') and os.path.normcase(str(resolve_path(config['loan']['path']).resolve()))==os.path.normcase(str(p)): raise UserError('This workbook is linked as the loan ledger. Choose a separate yearly expense workbook.')
@@ -435,7 +436,7 @@ def main():
         server=HTTPServer(('127.0.0.1',args.port),Handler);address=f'http://127.0.0.1:{server.server_port}/'
         (ROOT/'running-address.txt').write_text(address)
         (ROOT/'running-session.json').write_text(json.dumps({'address':address,'computer':socket.gethostname(),'instance':INSTANCE}))
-        print('Ctrl Ur Finances v3.32.53-alpha.2\n'+address+'\nUse Exit Ctrl Ur Finances in the sidebar before updating. Closing a browser tab does not stop the app.',flush=True)
+        print('Ctrl Ur Finances v3.32.53-alpha.3\n'+address+'\nUse Exit Ctrl Ur Finances in the sidebar before updating. Closing a browser tab does not stop the app.',flush=True)
         if not args.no_browser: threading.Timer(.5,lambda:webbrowser.open(address)).start()
         try: server.serve_forever()
         except KeyboardInterrupt: print('Ctrl Ur Finances stopped.')

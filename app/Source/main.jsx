@@ -1604,7 +1604,7 @@ function App({
     settings: editions || initialEditions
   }), /* @__PURE__ */React.createElement("p", {
     className: "brand-version"
-  }, "Version 3.32.53-alpha.2 \xB7 Experimental"), /* @__PURE__ */React.createElement(SidebarNav, {
+  }, "Version 3.32.53-alpha.3 \xB7 Experimental"), /* @__PURE__ */React.createElement(SidebarNav, {
     collapsibleKeys: ["month"],
     renderBelow: key => key === "month" ? /* @__PURE__ */React.createElement(React.Fragment, null, /* @__PURE__ */React.createElement(BusinessPeriodNav, {
       year,

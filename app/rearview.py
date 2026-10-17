@@ -1,7 +1,8 @@
 import json,hashlib,base64,re
+YEAR_FILES={year:'rearview-'+str(year)+'.json' for year in range(1900,2201)}
 def target(app,year):
     if type(year) is not int or not 1900<=year<=2200: raise app.UserError('Choose a valid year.')
-    return app.DATA/('rearview-'+str(year)+'.json')
+    return app.DATA/YEAR_FILES[year]
 def read(app,year):
     p=target(app,year);raw=p.read_bytes() if p.exists() else b''
     return {'data':json.loads(raw) if raw else None,'revision':hashlib.sha256(raw).hexdigest()}

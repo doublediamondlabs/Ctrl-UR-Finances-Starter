@@ -2,7 +2,7 @@
   "name": "ctrl-ur-finances-maintenance",
   "private": true,
   "type": "module",
-  "version": "3.32.53-alpha.2",
+  "version": "3.32.53-alpha.3",
   "devDependencies": {
     "jsdom": "30.1.2"
   },

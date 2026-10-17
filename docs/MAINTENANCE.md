@@ -1,7 +1,7 @@
 # Maintenance guide — Ctrl Ur Finances Starter
 
 ## Start here
-Keep this source folder separate from the installed application and its data. Current release: **3.32.53-alpha.2**. The earlier baseline and its verification record remain in LAST-VERIFIED.json. Do not mix live and starter updates. The starter stays experimental even after automated verification.
+Keep this source folder separate from the installed application and its data. Current release: **3.32.53-alpha.3**. The earlier baseline and its verification record remain in LAST-VERIFIED.json. Do not mix live and starter updates. The starter stays experimental even after automated verification.
 
 The application runs locally with Python and a bundled browser interface. React source is compiled into app/web/app.js; Python serves it and handles workbook/settings writes. Normal use needs no npm download or hosted service. Development dependency installation needs internet access once; keep the lockfiles.
 

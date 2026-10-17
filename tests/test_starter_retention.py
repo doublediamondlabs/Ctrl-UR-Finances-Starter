@@ -30,7 +30,7 @@ with tempfile.TemporaryDirectory() as td:
  assert len(list(histories[3].iterdir()))==4 and legacy.exists()
  assert (data/br.HISTORY).exists() and book.read_bytes()==before
  assert recovery.status(app)['state']=='green'
- preview=recovery.preview({'path':result['path']});assert preview['version']=='3.32.36-alpha.1'
+ preview=recovery.preview({'path':result['path']},app);assert preview['version']=='3.32.36-alpha.1'
  restored=Path(recovery.restore(app,preview)['folder']);assert (restored/'User-Data'/br.SETTINGS).exists()
  assert json.loads((restored/'data-location.json').read_text())['path']=='User-Data'
 print('PASS Starter external-data retention, legacy-set protection, completion marker, verified backup/status and isolated restore.')

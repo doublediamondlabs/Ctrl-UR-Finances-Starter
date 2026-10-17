@@ -1,3 +1,4 @@
+import file_access
 """Local household setup and optional feature preferences. No external services."""
 import base64,copy,json,struct,zlib
 from pathlib import Path
@@ -9,7 +10,7 @@ def get(app):
  c=app.load_config();p=defaults(bool(c.get('years')));p.update(c.get('preferences',{}));p['modules']={**defaults(bool(c.get('years')))['modules'],**p.get('modules',{})};return p
 def packet(app):
  c=app.load_config();p=get(app)
- return {'preferences':p,'revision':app.digest(json.dumps(p,sort_keys=True).encode()),'initialized':bool(c.get('years')) or c.get('setupComplete',False),'dataDirectory':str(app.DATA),'version':'3.32.53-alpha.2'}
+ return {'preferences':p,'revision':app.digest(json.dumps(p,sort_keys=True).encode()),'initialized':bool(c.get('years')) or c.get('setupComplete',False),'dataDirectory':str(app.DATA),'version':'3.32.53-alpha.3'}
 def validate(app,p):
  if not isinstance(p,dict) or set(p)!=set(defaults()):raise app.UserError('Invalid application preferences.')
  for key,size in [('householdName',100),('title',60),('tagline',100)]:
@@ -68,7 +69,8 @@ def setup(app,body):
  year=int(body.get('year',0))
  if not 1900<=year<=2200:raise app.UserError('Choose a calendar year between 1900 and 2200.')
  p=defaults();p['householdName']=str(body.get('householdName','')).strip();validate(app,p)
- target=Path(str(body.get('dataDirectory') or app.DATA)).expanduser().resolve()
+ try:target=file_access.request_path(str(body.get('dataDirectory') or app.DATA),'setup',app.DATA,descendants=False)
+ except ValueError as exc:raise app.UserError(str(exc)) from exc
  if target==app.ROOT or app.ROOT.is_relative_to(target) or (target.is_relative_to(app.ROOT) and target!=app.ROOT/'User-Data'):raise app.UserError('Use the default User-Data folder or a separate empty folder outside the app.')
  if target.exists() and any(target.iterdir()):raise app.UserError('Choose an empty data folder. Existing files will not be replaced.')
  raw=base64.b64decode(body.get('base64',''),validate=True);app.validate_xlsx(raw)

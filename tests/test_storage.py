@@ -17,6 +17,7 @@ with tempfile.TemporaryDirectory() as td:
   if p.is_file():shutil.copy2(p,app.ROOT/p.name)
  external=Path(td)/'External-Data'
  assert pref.defaults(True)['modules']['rom'] is False;legacy={'years':{'2026':{}},'preferences':pref.defaults(True)};legacy['preferences']['modules'].pop('rom');original_config=app.load_config;app.load_config=lambda:legacy;assert pref.get(app)['modules']['rom'] is False;assert 'rom' not in legacy['preferences']['modules'];app.load_config=original_config;assert not pref.packet(app)['initialized'];assert not any(pref.get(app)['modules'].values())
+ __import__('file_access').remember('setup',external)
  pref.setup(app,{'householdName':'SYNTHETIC QA','year':2026,'dataDirectory':str(external),'base64':base64.b64encode(raw).decode()});assert app.DATA==external;assert pref.packet(app)['initialized'];assert app.workbook_path(2026)[0].exists()
  state=pref.packet(app);bad=copy.deepcopy(state['preferences']);bad['modules']['inspections']=True
  try:pref.save(app,{'revision':state['revision'],'preferences':bad});raise AssertionError('dependency ignored')
@@ -33,7 +34,7 @@ with tempfile.TemporaryDirectory() as td:
   try:operation();raise AssertionError('nested destination accepted')
   except ValueError:pass
  result=recovery.create(app,{});assert result['state']=='green',result
- preview=recovery.preview({'path':result['path']});restored=Path(recovery.restore(app,preview)['folder']);assert (restored/'User-Data/appearance-logo.png').read_bytes()==png();assert json.loads((restored/'data-location.json').read_text())['path']=='User-Data'
+ preview=recovery.preview({'path':result['path']},app);restored=Path(recovery.restore(app,preview)['folder']);assert (restored/'User-Data/appearance-logo.png').read_bytes()==png();assert json.loads((restored/'data-location.json').read_text())['path']=='User-Data'
  cfg=json.loads((restored/'User-Data/linked-workbooks.json').read_text());assert (restored/cfg['years']['2026']['path']).read_bytes()==raw
  out=portable_copy.create_copy(Path(td));assert (out/'User-Data/appearance-logo.png').read_bytes()==png();assert json.loads((out/'data-location.json').read_text())['path']=='User-Data';cfg=json.loads((out/'User-Data/linked-workbooks.json').read_text());assert (out/cfg['years']['2026']['path']).read_bytes()==raw
  # Preserve current data on repeated setup attempt.

@@ -1,6 +1,6 @@
 # Public-release preparation — 2026-10-17
 
-Candidate: **Ctrl Ur Finances v3.32.53-alpha.2**
+Candidate: **Ctrl Ur Finances v3.32.53-alpha.3**
 Source: supplied v3.32.53-alpha.1 Repository ZIP, extracted into a separate working copy.
 The private live Expense Book, SEO Genie and original Starter source were not modified.
 
@@ -60,7 +60,27 @@ program updates, and saved-data preservation. Actual ZIP checks are separate fro
 source tests and exercise the packaged updater.
 
 Not performed here: native Windows/Excel/shared-drive pilot, full dependency advisory
-audit, independent security audit, fresh online npm installation, or GitHub CodeQL
-on the public candidate. Run the Windows pilot and both CodeQL language analyses
+audit, independent security audit, fresh online npm installation, or a follow-up GitHub CodeQL scan
+on alpha.3. The owner-provided alpha.2 scan completed and reported 13 path-injection
+alerts; the follow-up scan is pending. Run the Windows pilot and both CodeQL language analyses
 before publishing downloadable release assets. Screenshots should be taken from
 fictional data during that pilot; no private application screenshots are bundled.
+
+## Follow-up to the first CodeQL scan
+
+The owner supplied the 13-alert list and the full source-to-sink path for alert
+13 (workbook linking). The listed locations were reviewed in local source. The
+alerts include intentional external file selection, optimistic-lock path label
+comparisons, ZIP extraction, and yearbook filename construction. Alert count is
+not a count of demonstrated exploits; host/origin/token guards already existed.
+
+Alpha.3 adds scoped native-chooser grants for external workbook/setup/recovery
+paths, normalizes paths before enforcing the data-folder boundary, removes
+filesystem resolution of revision-label inputs, uses a fixed yearbook filename
+map, and explicitly checks restore-member containment. No scan exclusions,
+alert dismissals, or security-rule suppressions were added.
+
+The backup destination/reference selection and existing configured data/workbook
+locations remain trusted local-app settings; the app is not an Internet-hosted
+service or a sandbox against a malicious user of the same operating-system account.
+Native chooser behavior and UNC paths need the owner Windows pilot.

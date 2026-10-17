@@ -1,5 +1,5 @@
 """Verified local ZIP snapshots and isolated restores. No live workbook mutation."""
-import threading, time
+import threading, time, file_access
 import re, copy, datetime as dt, hashlib, json, os, shutil, tempfile, uuid, zipfile
 from pathlib import Path, PurePosixPath
 from xml.etree import ElementTree as ET
@@ -136,6 +136,7 @@ def create(app,body):
         phase('Finalizing verified backup');report(current=final.name)
         archive_hash=sha(tmp)
         os.replace(tmp,final)
+        file_access.remember('archive',final)
         record={'created':manifest['created'],'path':str(final),'completedAt':stamp(),'archiveHash':archive_hash,'sources':before,'reference':reference,'includeUpdateArchives':include_updates}
         app.atomic_file(app.DATA/'backup-status.json',json.dumps(record,indent=2).encode(),backup=False)
         # Cleanup metadata failures must never lose the successful ZIP or deletion accounting.
@@ -211,15 +212,26 @@ def inspect(path):
             if not safe_name(name) or 'App/'+name not in m['files']: raise ValueError('Backup contains an external or missing workbook link.')
         return m
 
-def preview(body):
-    p=Path(str(body.get('path','')).strip().strip('"')).expanduser().resolve()
+def archive_path(app,value):
+    # Preserve Use Last Successful Backup after restart using the app-owned record.
+    known=[]
+    record=app.DATA/'backup-status.json'
+    if record.is_file():
+        try:
+            saved=json.loads(record.read_text(encoding='utf-8')).get('path')
+            if isinstance(saved,str) and saved:known.append(Path(saved))
+        except (OSError,ValueError):pass
+    return file_access.request_path(value,'archive',app.DATA,known)
+
+def preview(body,app):
+    p=archive_path(app,body.get('path',''))
     if not p.is_file() or p.suffix.lower()!='.zip': raise ValueError('Enter the full path to a backup ZIP.')
     before=sha(p);m=inspect(p)
     if before!=sha(p): raise ValueError('Backup changed during verification. Preview again.')
     return {'path':str(p),'revision':before,'created':m['created'],'version':m['version'],'links':m['links'],'fileCount':len(m['files']),'reference':m.get('reference','')}
 
 def restore(app,body):
-    p=Path(str(body.get('path','')).strip().strip('"')).resolve()
+    p=archive_path(app,body.get('path',''))
     # Copy first: preview guard and extraction operate on the same immutable local snapshot.
     parent=app.DATA/'Restore-Reviews';parent.mkdir(exist_ok=True)
     stage=Path(tempfile.mkdtemp(prefix='.dd-backup-',dir=parent))
@@ -230,7 +242,7 @@ def restore(app,body):
         with zipfile.ZipFile(archive) as z:
             for info in z.infolist():
                 if info.filename==MANIFEST: continue
-                target=stage/info.filename;target.parent.mkdir(parents=True,exist_ok=True)
+                target=file_access.archive_member(stage,info.filename);target.parent.mkdir(parents=True,exist_ok=True)
                 with z.open(info) as src,open(target,'xb') as dst:shutil.copyfileobj(src,dst)
         final=parent/('Review-'+dt.datetime.now().strftime('%Y%m%d-%H%M%S-%f')+'-'+uuid.uuid4().hex[:6])
         (stage/'App').rename(final)
@@ -242,7 +254,8 @@ def choose(app,body):
     kind=body.get('kind')
     if kind not in ('destination','reference','archive'): raise ValueError('Unknown backup chooser.')
     initial=str(body.get('initial') or '').strip().strip('"')
-    start=Path(initial).expanduser() if initial else app.ROOT
+    try:start=file_access.request_path(initial,kind if kind!='archive' else 'archive',app.DATA) if initial else app.ROOT
+    except ValueError:start=app.ROOT
     if not start.is_dir(): start=start.parent
     if not start.is_dir(): start=app.ROOT
     try:
@@ -254,7 +267,8 @@ def choose(app,body):
                 selected=filedialog.askopenfilename(parent=root,title='Choose a recovery backup ZIP',initialdir=str(start),filetypes=[('Recovery backup ZIP','*.zip')])
             else:
                 selected=filedialog.askdirectory(parent=root,title='Choose backup destination folder' if kind=='destination' else 'Choose external reference folder',initialdir=str(start),mustexist=True)
+            file_access.remember(kind,selected)
             return {'path':selected or ''}
         finally: root.destroy()
     except Exception as exc:
-        raise ValueError('The chooser could not open. You can still paste a full path into the field.') from exc
+        raise ValueError('The chooser could not open. Reopen the app and try again, or use a location inside the data folder.') from exc
