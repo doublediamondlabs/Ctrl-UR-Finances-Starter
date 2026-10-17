@@ -9,6 +9,10 @@ This shareable Starter edition is derived from Expense Book. It begins with a
 clean household setup. Automated checks use fictional records; this particular
 preview still needs a Windows pilot before use with important data.
 
+### Optional travel companion
+
+[RōM Travel Planner](https://github.com/doublediamondlabs/RoM/releases) provides trip planning, fuel estimates, daily plans, and a reusable AI planning prompt. Enable the optional RōM Travel Exchange module in Ctrl Ur Finances to exchange inspection travel data between the two applications. Both applications work independently.
+
 ## What it does
 
 - Track household purchases and income in local Excel-format workbooks.
