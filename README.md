@@ -37,21 +37,19 @@ Screenshots from v3.32.53-alpha.4 using a fictional demonstration household. All
 
 Compare months side by side with Spending Mix doughnuts. Highlight everyday spending categories, or choose the categories you want to compare.
 
-!\[Spending Mix compares September and October with matching category colors and a spending-change summary.](docs/screenshots/spending-mix.png)
+![Spending Mix compares September and October with matching category colors and a spending-change summary.](docs/screenshots/spending-mix.png)
 
 ### Pick up where you left off
 
 Home / Overview brings recorded income, spending, and monthly review status together.
 
-!\[Home / Overview shows household totals and months awaiting financial reconciliation.](docs/screenshots/home-overview.png)
+![Home / Overview shows household totals and months awaiting financial reconciliation.](docs/screenshots/home-overview.png)
 
 ### Keep the details close
 
 Expand a household category to review purchases, add notes, edit entries, or move purchases between categories.
 
-!\[October household expenses with Groceries expanded to show a recorded purchase and entry controls.](docs/screenshots/monthly-workspace.png)
-
-
+![October household expenses with Groceries expanded to show a recorded purchase and entry controls.](docs/screenshots/monthly-workspace.png)
 
 ## Download and start
 
